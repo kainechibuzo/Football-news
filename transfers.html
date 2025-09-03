@@ -79,16 +79,12 @@
   <button id="backToTop" title="Back to top">↑</button>
 
   <script>
-  /* ---------- CONFIG ----------
-     Replace SHEET_ID with your Google Sheet ID. Sheet should be published or shared public.
-     Example gviz url:
-     https://docs.google.com/spreadsheets/d/SHEET_ID/gviz/tq?tqx=out:json&sheet=Sheet1
-     --------------------------------*/
+
   const SHEET_ID = 'SHEET_ID'; // <-- replace
   const SHEET_NAME = 'Sheet1';  // name of worksheet tab
 
-  // fallback seed
-  let data = [
+ // transfers.js
+const transfers = [
   {"player":"Florian Wirtz","from":"Bayer Leverkusen","to":"Liverpool","fee":"€100M (up to €116.5M)","pos":"AM","status":"Official","date":"2025-06-20"},
   {"player":"Jeremie Frimpong","from":"Bayer Leverkusen","to":"Liverpool","fee":"£29.5M","pos":"DF","status":"Official","date":"2025-06-01"},
   {"player":"Milos Kerkez","from":"Bournemouth","to":"Liverpool","fee":"£40M","pos":"DF","status":"Official","date":"2025-06-26"},
@@ -135,7 +131,6 @@ transfers.forEach(t => {
   tbody.appendChild(row);
 });
 
-  ];
 
   // state
   const perPage = 12;
@@ -294,6 +289,7 @@ transfers.forEach(t => {
   </script>
 </body>
 </html>
+
 
 
 
