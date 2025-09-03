@@ -6,7 +6,6 @@
   <title>Transfers — Football News Official</title>
   <meta name="description" content="Latest football transfers, deals, and rumors." />
   <style>
-  
     :root{--accent:#ff0000;--card:#141414;--bg:#000;--text:#f5f5f5}
     *{box-sizing:border-box}
     body{margin:0;font-family:ui-sans-serif,system-ui,Arial,Roboto;background:linear-gradient(180deg,var(--bg),#120000);color:var(--text)}
@@ -17,14 +16,15 @@
     .toolbar{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:.8rem}
     .toolbar .left{display:flex;gap:.5rem;flex-wrap:wrap}
     input,select,button{padding:.5rem .7rem;border-radius:8px;border:1px solid #333;background:#0f0f0f;color:var(--text)}
-    .btn{background:var(--accent);border:none;color:white;font-weight:800;border-radius:8px}
+    .btn{background:var(--accent);border:none;color:white;font-weight:800;border-radius:8px;cursor:pointer}
+    .btn:hover{opacity:.9}
     .tablewrap{overflow:auto;border-radius:10px;border:1px solid #222}
     table{width:100%;border-collapse:collapse;min-width:1100px}
     th,td{padding:.6rem;border-bottom:1px solid #222;text-align:left;white-space:nowrap}
     th{position:sticky;top:0;background:#101010;color:#ff6666}
-    tr:hover td{background:rgba(255,255,255,.02)}
+    tr:hover td{background:rgba(255,255,255,.05)}
     .fav{cursor:pointer}
-    #backToTop{position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);display:none;color:#fff}
+    #backToTop{position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;border:none;background:var(--accent);display:none;color:#fff;cursor:pointer}
     .muted{color:#aaa;font-size:.95rem}
   </style>
 </head>
@@ -35,8 +35,8 @@
       <div>
         <a href="index.html" style="color:#ddd;text-decoration:none;margin-right:1rem">Home</a>
         <a href="analysis.html" style="color:#ddd;text-decoration:none;margin-right:1rem">Analysis</a>
-        <a href="contact.html" style="color:#eb0e0e;text-decoration:none;margin-right:1rem">Contact</a>
-        <a href="news.html" style="color:#eb0e0e;text-decoration:none">news</a>
+        <a href="contact.html" style="color:#ddd;text-decoration:none;margin-right:1rem">Contact</a>
+        <a href="news.html" style="color:#ddd;text-decoration:none">News</a>
       </div>
     </div>
   </header>
@@ -73,72 +73,29 @@
       <button id="next" class="btn">Next</button>
     </div>
 
-    <p style="margin-top:1rem" class="muted">Tip: publish a Google Sheet and set the SHEET_ID below. Or edit the local seed JSON inside this file.</p>
+    <p style="margin-top:1rem" class="muted">Tip: publish a Google Sheet and set the SHEET_ID in the code. Or edit the local seed JSON.</p>
   </main>
 
   <button id="backToTop" title="Back to top">↑</button>
 
   <script>
+  // ===== Transfer Data (Local Seed) =====
+  let data = [
+    {"player":"Florian Wirtz","from":"Bayer Leverkusen","to":"Liverpool","fee":"116500000","contract":"5y","pos":"MF","status":"Official","date":"2025-06-20","notes":"Record signing"},
+    {"player":"Jeremie Frimpong","from":"Bayer Leverkusen","to":"Liverpool","fee":"29500000","contract":"5y","pos":"DF","status":"Official","date":"2025-06-01"},
+    {"player":"Alexander Isak","from":"Newcastle","to":"Liverpool","fee":"130000000","contract":"5y","pos":"FW","status":"Official","date":"2025-09-01"},
+    {"player":"Eberechi Eze","from":"Crystal Palace","to":"Arsenal","fee":"67500000","contract":"4y","pos":"MF","status":"Official","date":"2025-08-15"},
+    {"player":"Yoane Wissa","from":"Brentford","to":"Newcastle","fee":"55000000","contract":"4y","pos":"ST","status":"Official","date":"2025-09-01"},
+    {"player":"Alejandro Garnacho","from":"Manchester United","to":"Chelsea","fee":"40000000","contract":"6y","pos":"LW","status":"Official","date":"2025-08-30"}
+  ];
 
-  const SHEET_ID = 'SHEET_ID'; // <-- replace
-  const SHEET_NAME = 'Sheet1';  // name of worksheet tab
-
- // transfers.js
-const transfers = [
-  {"player":"Florian Wirtz","from":"Bayer Leverkusen","to":"Liverpool","fee":"€100M (up to €116.5M)","pos":"AM","status":"Official","date":"2025-06-20"},
-  {"player":"Jeremie Frimpong","from":"Bayer Leverkusen","to":"Liverpool","fee":"£29.5M","pos":"DF","status":"Official","date":"2025-06-01"},
-  {"player":"Milos Kerkez","from":"Bournemouth","to":"Liverpool","fee":"£40M","pos":"DF","status":"Official","date":"2025-06-26"},
-  {"player":"Hugo Ekitiké","from":"Eintracht Frankfurt","to":"Liverpool","fee":"£69M (up to £79M)","pos":"FW","status":"Official","date":"2025-07-23"},
-  {"player":"Alexander Isak","from":"Newcastle","to":"Liverpool","fee":"£125M (up to £130M)","pos":"FW","status":"Official","date":"2025-09-01"},
-  {"player":"Eberechi Eze","from":"Crystal Palace","to":"Arsenal","fee":"£67.5M","pos":"MF","status":"Official","date":"2025-08-15"},
-  {"player":"Piero Hincapié","from":"Bayer Leverkusen","to":"Arsenal","fee":"Loan","pos":"DF","status":"Official","date":"2025-09-01"},
-  {"player":"Anthony Elanga","from":"Nottingham Forest","to":"Newcastle","fee":"£55M","pos":"RW","status":"Official","date":"2025-07-11"},
-  {"player":"Malick Thiaw","from":"Milan","to":"Newcastle","fee":"£34.3M","pos":"CB","status":"Official","date":"2025-08-12"},
-  {"player":"Jacob Ramsey","from":"Aston Villa","to":"Newcastle","fee":"£43M","pos":"CM","status":"Official","date":"2025-08-17"},
-  {"player":"Nick Woltemade","from":"VfB Stuttgart","to":"Newcastle","fee":"£69M","pos":"ST","status":"Official","date":"2025-08-30"},
-  {"player":"Yoane Wissa","from":"Brentford","to":"Newcastle","fee":"£55M","pos":"ST","status":"Official","date":"2025-09-01"},
-  {"player":"Fer López","from":"Celta Vigo","to":"Wolves","fee":"£19.6M","pos":"RW","status":"Official","date":"2025-06-20"},
-  {"player":"Jørgen Strand Larsen","from":"Unknown","to":"Wolves","fee":"£23M","pos":"CF","status":"Official","date":"2025-07-01"},
-  {"player":"Jhon Arias","from":"Fluminense","to":"Wolves","fee":"Undisclosed","pos":"RW","status":"Official","date":"2025-07-24"},
-  {"player":"David Møller Wolfe","from":"AZ","to":"Wolves","fee":"£10M","pos":"LB","status":"Official","date":"2025-08-02"},
-  {"player":"Jackson Tchatchoua","from":"Hellas Verona","to":"Wolves","fee":"£10.8M","pos":"RB","status":"Official","date":"2025-08-18"},
-  {"player":"Tolu Arokodare","from":"Genk","to":"Wolves","fee":"£24M","pos":"ST","status":"Official","date":"2025-09-01"},
-  {"player":"Dário Essugo","from":"Sporting CP","to":"Chelsea","fee":"£18M","pos":"DM","status":"Official","date":"2025-06-02"},
-  {"player":"Liam Delap","from":"Ipswich Town","to":"Chelsea","fee":"£30M","pos":"ST","status":"Official","date":"2025-06-04"},
-  {"player":"Mamadou Sarr","from":"Strasbourg","to":"Chelsea","fee":"£12M","pos":"DF","status":"Official","date":"2025-06-09"},
-  {"player":"Kendry Páez","from":"Independiente del Valle","to":"Chelsea","fee":"£17.2M","pos":"AM","status":"Official","date":"2025-07-01"},
-  {"player":"João Pedro","from":"Brighton","to":"Chelsea","fee":"£55M + add-ons","pos":"ST","status":"Official","date":"2025-07-02"},
-  {"player":"Jamie Gittens","from":"Borussia Dortmund","to":"Chelsea","fee":"£48.5M + add-ons","pos":"LW","status":"Official","date":"2025-07-05"},
-  {"player":"Jorrel Hato","from":"Ajax","to":"Chelsea","fee":"£35.5M + add-ons","pos":"LB","status":"Official","date":"2025-08-03"},
-  {"player":"Estêvão","from":"Palmeiras","to":"Chelsea","fee":"£29M + add-ons","pos":"RW","status":"Official","date":"2025-08-05"},
-  {"player":"Alejandro Garnacho","from":"Manchester United","to":"Chelsea","fee":"£40M","pos":"LW","status":"Official","date":"2025-08-30"}
-];
-
-// Render transfers in table
-const tbody = document.querySelector("#transfersTable tbody");
-
-transfers.forEach(t => {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${t.player}</td>
-    <td>${t.from}</td>
-    <td>${t.to}</td>
-    <td>${t.fee}</td>
-    <td>${t.pos}</td>
-    <td>${t.date}</td>
-    <td>${t.status}</td>
-  `;
-  tbody.appendChild(row);
-});
-
-
-  // state
-  const perPage = 12;
+  // ===== State =====
+  const perPage = 10;
   let page = 1;
   let showFavs = false;
   const FKEY = 'fno_favs_v2';
 
-  // elements
+  // ===== Elements =====
   const tbody = document.getElementById('tbody');
   const q = document.getElementById('q');
   const pos = document.getElementById('pos');
@@ -146,51 +103,13 @@ transfers.forEach(t => {
   const sort = document.getElementById('sort');
   const pageInfo = document.getElementById('pageInfo');
 
-  // util
-  const fmt = n => (n===0||n===null) ? 'Free' : new Intl.NumberFormat().format(n);
+  // ===== Utils =====
+  const fmt = n => isNaN(n) ? n : (n==0? 'Free': '€'+new Intl.NumberFormat().format(n));
   const loadFavs = ()=> new Set(JSON.parse(localStorage.getItem(FKEY)||'[]'));
   const saveFavs = s=> localStorage.setItem(FKEY, JSON.stringify([...s]));
+  const hashRow = r => `${r.player}|${r.from}|${r.to}|${r.date}`;
 
-  function hashRow(r){ return `${r.player}|${r.from}|${r.to}|${r.date}`; }
-
-  // fetch sheet if provided
-  async function fetchSheet(){
-    if(!SHEET_ID || SHEET_ID==='SHEET_ID') return false;
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-    try{
-      const res = await fetch(url);
-      const txt = await res.text();
-      // gviz returns )]}\'\n + json
-      const json = JSON.parse(txt.replace(/^[^\{]+/,''));
-      const rows = json.table.rows;
-      const cols = json.table.cols.map(c => c.label || c.id || '');
-      const out = rows.map(r => {
-        const obj = {};
-        r.c.forEach((cell,i)=>{
-          const key = cols[i] ? cols[i].toString().trim().toLowerCase() : `col${i}`;
-          obj[key] = cell && cell.v !== null ? cell.v : '';
-        });
-        // map expected keys to our normalized schema
-        return {
-          player: obj.player || obj.name || obj.col0 || '',
-          from: obj.from || obj.clubfrom || obj.col1 || '',
-          to: obj.to || obj.clubto || obj.col2 || '',
-          fee: obj.fee || obj.price || obj.col3 || 0,
-          contract: obj.contract || obj.col4 || '',
-          pos: obj.pos || obj.position || obj.col5 || '',
-          status: obj.status || obj.col6 || '',
-          date: obj.date || obj.col7 || '',
-          notes: obj.notes || obj.col8 || ''
-        };
-      });
-      if(out.length) { data = out; return true; }
-    }catch(err){
-      console.warn('Sheet load failed', err);
-    }
-    return false;
-  }
-
-  // filtering / sorting
+  // ===== Filtering/Sorting =====
   function getFiltered(){
     const qv = (q.value||'').toLowerCase().trim();
     let arr = data.filter(r=>{
@@ -207,13 +126,14 @@ transfers.forEach(t => {
     const st = sort.value;
     if(st==='date_desc') arr.sort((a,b)=> (b.date||'').localeCompare(a.date||''));
     else if(st==='date_asc') arr.sort((a,b)=> (a.date||'').localeCompare(b.date||''));
-    else if(st==='fee_desc') arr.sort((a,b)=> (b.fee||0)-(a.fee||0));
-    else if(st==='fee_asc') arr.sort((a,b)=> (a.fee||0)-(b.fee||0));
+    else if(st==='fee_desc') arr.sort((a,b)=> (Number(b.fee)||0)-(Number(a.fee)||0));
+    else if(st==='fee_asc') arr.sort((a,b)=> (Number(a.fee)||0)-(Number(b.fee)||0));
     return arr;
   }
 
+  // ===== Render =====
   function render(){
-    const filtered = getFiltered();
+    let filtered = getFiltered();
     if(showFavs){
       const favs = loadFavs();
       filtered = filtered.filter(r=> favs.has(hashRow(r)));
@@ -221,7 +141,8 @@ transfers.forEach(t => {
     const total = filtered.length;
     const pages = Math.max(1, Math.ceil(total/perPage));
     if(page>pages) page = pages;
-    const start = (page-1)*perPage; const slice = filtered.slice(start, start+perPage);
+    const start = (page-1)*perPage; 
+    const slice = filtered.slice(start, start+perPage);
 
     tbody.innerHTML = slice.map(r=>{
       const favs = loadFavs();
@@ -231,7 +152,7 @@ transfers.forEach(t => {
         <td>${r.player}</td>
         <td>${r.from}</td>
         <td>${r.to}</td>
-        <td>${fmt(Number(r.fee))}</td>
+        <td>${fmt(r.fee)}</td>
         <td>${r.contract||''}</td>
         <td>${r.pos||''}</td>
         <td>${r.status||''}</td>
@@ -243,7 +164,7 @@ transfers.forEach(t => {
     pageInfo.textContent = `Page ${page} / ${pages} • ${total} result(s)`;
   }
 
-  // events
+  // ===== Events =====
   q.addEventListener('input', ()=>{ page=1; render(); });
   pos.addEventListener('change', ()=>{ page=1; render(); });
   status.addEventListener('change', ()=>{ page=1; render(); });
@@ -268,9 +189,7 @@ transfers.forEach(t => {
     const url = URL.createObjectURL(b); const a = document.createElement('a'); a.href=url; a.download='transfers.csv'; a.click(); URL.revokeObjectURL(url);
   });
 
-  document.getElementById('showFavs').addEventListener('click', ()=>{
-    showFavs = !showFavs; page = 1; render();
-  });
+  document.getElementById('showFavs').addEventListener('click', ()=>{ showFavs = !showFavs; page = 1; render(); });
 
   // keyboard shortcut "/" to focus search
   window.addEventListener('keydown', (e)=>{ if(e.key === '/'){ e.preventDefault(); q.focus(); }});
@@ -280,16 +199,9 @@ transfers.forEach(t => {
   window.addEventListener('scroll', ()=> back.style.display = window.scrollY>300 ? 'block':'none');
   back.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
 
-  // load flow: try sheet then fallback seed
-  (async function init(){
-    const ok = await fetchSheet();
-    if(!ok) console.info('Sheet not loaded, using local seed');
-    render();
-  })();
+  // init
+  render();
   </script>
 </body>
 </html>
-
-
-
 
