@@ -89,7 +89,9 @@
 
   // fallback seed
   let data = [
-     {"player":"Florian Wirtz","from":"Bayer Leverkusen","to":"Liverpool","fee":"€100M (up to €116.5M)","pos":"AM","status":"Official","date":"2025-06-20"},
+    // transfers.js
+const transfers = [
+  {"player":"Florian Wirtz","from":"Bayer Leverkusen","to":"Liverpool","fee":"€100M (up to €116.5M)","pos":"AM","status":"Official","date":"2025-06-20"},
   {"player":"Jeremie Frimpong","from":"Bayer Leverkusen","to":"Liverpool","fee":"£29.5M","pos":"DF","status":"Official","date":"2025-06-01"},
   {"player":"Milos Kerkez","from":"Bournemouth","to":"Liverpool","fee":"£40M","pos":"DF","status":"Official","date":"2025-06-26"},
   {"player":"Hugo Ekitiké","from":"Eintracht Frankfurt","to":"Liverpool","fee":"£69M (up to £79M)","pos":"FW","status":"Official","date":"2025-07-23"},
@@ -116,6 +118,25 @@
   {"player":"Jorrel Hato","from":"Ajax","to":"Chelsea","fee":"£35.5M + add-ons","pos":"LB","status":"Official","date":"2025-08-03"},
   {"player":"Estêvão","from":"Palmeiras","to":"Chelsea","fee":"£29M + add-ons","pos":"RW","status":"Official","date":"2025-08-05"},
   {"player":"Alejandro Garnacho","from":"Manchester United","to":"Chelsea","fee":"£40M","pos":"LW","status":"Official","date":"2025-08-30"}
+];
+
+// Render transfers in table
+const tbody = document.querySelector("#transfersTable tbody");
+
+transfers.forEach(t => {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${t.player}</td>
+    <td>${t.from}</td>
+    <td>${t.to}</td>
+    <td>${t.fee}</td>
+    <td>${t.pos}</td>
+    <td>${t.date}</td>
+    <td>${t.status}</td>
+  `;
+  tbody.appendChild(row);
+});
+
   ];
 
   // state
@@ -275,4 +296,5 @@
   </script>
 </body>
 </html>
+
 
