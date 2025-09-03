@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Football News Official</title>
+  <meta name="description" content="Live transfers, match reports, and exclusive football coverage." />
+
+  <!-- Internal CSS -->
+  <style>
+    :root {
+      --primary: #8b0000; /* Dark red */
+      --dark: #000;       /* Black */
+      --light: #f4f4f4;   /* Light gray for text areas */
+      --gray: #bbb;       /* Subtle gray */
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    header {
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid var(--primary);
+    }
+    header h1 { font-size: 1.5rem; margin: 0; color: var(--primary); }
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a.active, nav a:hover { color: var(--primary); }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(139,0,0,0.7)),
+                  url('https://source.unsplash.com/1600x600/?football,stadium') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .hero h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .hero p { font-size: 1.2rem; margin-bottom: 1rem; }
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover { background: #a50000; }
+
+    /* Cards Section */
+    main {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 { color: var(--primary); margin-bottom: 1rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: #111;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(139,0,0,0.7);
+    }
+    .card h3 { margin-top: 0; color: var(--primary); }
+
+    /* News section */
+    .news {
+      margin-top: 3rem;
+    }
+    .news article {
+      background: #111;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+      transition: box-shadow 0.3s;
+    }
+    .news article:hover {
+      box-shadow: 0 4px 12px rgba(139,0,0,0.7);
+    }
+    .news article h4 { margin: 0; color: var(--primary); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      background: #111;
+      color: var(--gray);
+      border-top: 3px solid var(--primary);
+    }
+    footer a { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <!-- ============ Header ============ -->
+  <header>
+    <h1>Football News Official</h1>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="transfers.html">Transfers</a>
+      <a href="news.html">News</a>
+      <a href="analysis.html">Analysis</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <!-- ============ Hero Section ============ -->
+  <section class="hero">
+    <h2>Welcome to Football News</h2>
+    <p>Get the latest football updates, transfers, and exclusive reports.</p>
+    <a href="transfers.html" class="btn">View Transfers</a>
+  </section>
+
+  <!-- ============ Highlights Section ============ -->
+  <main>
+    <section>
+      <h2>Latest Highlights</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Transfer News</h3>
+          <p>Liverpool sign Alexander Isak for £125m — a new Premier League record.</p>
+        </div>
+        <div class="card">
+          <h3>Match Reports</h3>
+          <p>Manchester City edge Arsenal 2-1 in a thrilling clash at the Etihad.</p>
+        </div>
+        <div class="card">
+          <h3>Exclusive Insights</h3>
+          <p>Inside Chelsea’s rebuild: How the Blues are planning for the future.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ News Feed ============ -->
+    <section class="news">
+      <h2>Latest News</h2>
+      <article>
+        <h4>Barcelona confirm signing of young star</h4>
+        <p>The Catalan giants have secured a rising talent for €60m after months of negotiations.</p>
+      </article>
+      <article>
+        <h4>Champions League fixtures announced</h4>
+        <p>The group stage draw sets up exciting clashes between Europe’s elite clubs.</p>
+      </article>
+      <article>
+        <h4>Premier League Player of the Month</h4>
+        <p>Arsenal midfielder earns September’s award after a string of excellent performances.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- ============ Footer ============ -->
+  <footer>
+    <p>&copy; 2025 Football News Official. All rights reserved.</p>
+    <p><a href="#">Back to top</a></p>
+  </footer>
+</body>
+</html>
+
+
